@@ -7,6 +7,7 @@ buildscript {
 
     ext {
         junitVersion = '5.4.2'
+        koinVersion = '2.1.6'
     }
 
     dependencies {
@@ -40,6 +41,14 @@ dependencies {
 
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
     testCompile group: 'org.flywaydb', name: 'flyway-core', version: '6.2.4'
+
+    implementation "org.koin:koin-core:$koinVersion"
+    implementation "org.koin:koin-core-ext:$koinVersion"
+    testImplementation "org.koin:koin-test:$koinVersion"
+    implementation "org.koin:koin-java:2.1.0-alpha-2"
+
+    compile "com.chadmarchand:kutna-common:1.0.+"
+    testImplementation "com.chadmarchand:kutna-common:1.0.+:test"
 }
 
 compileKotlin {

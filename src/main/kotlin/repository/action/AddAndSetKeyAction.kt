@@ -8,6 +8,11 @@ class AddAndSetKeyAction<T : Any>(
     fun execute(entity: T): T {
         val key = repository.table.addAndReturnKey(entity)
         repository.entityMapper.setEntityId(entity, key)
+
+        if (repository.isLinked) {
+            repository.updateLinkedEntities(entity)
+        }
+
         return repository.get(key)
     }
 }

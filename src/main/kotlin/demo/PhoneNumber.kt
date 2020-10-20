@@ -11,7 +11,10 @@ data class PhoneNumber(
     var id: Id = Id.DEFAULT_ID,
 
     @Persist
-    var type: PhoneNumberType = PhoneNumberType.HOME,
+    var personId: Id = Id.DEFAULT_ID,
+
+    @Persist
+    var typeId: Id = PhoneNumberType.HOME.id,
 
     @Persist
     var phoneNumber: String = ""

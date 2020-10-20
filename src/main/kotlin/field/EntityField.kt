@@ -21,7 +21,7 @@ open class EntityField internal constructor(
         return field.type
     }
 
-    private fun isListField(): Boolean {
+    fun isListField(): Boolean {
         try {
             getListElementType()
         } catch (e: ClassCastException) {

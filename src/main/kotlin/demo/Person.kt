@@ -13,6 +13,9 @@ data class Person(
     var id: Id = Id.DEFAULT_ID,
 
     @Persist
+    var isEmployed: Boolean = false,
+
+    @Persist
     @OneToOne(sourceFieldName = "id", targetFieldName = "personId")
     var name: Name? = null,
 

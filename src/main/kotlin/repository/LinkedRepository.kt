@@ -1,14 +1,12 @@
 package com.chadmarchand.kutna.persistence.repository
 
 import com.chadmarchand.kutna.persistence.field.EntityField
+import com.chadmarchand.kutna.persistence.field.getLinkedFieldSourceValue
+import com.chadmarchand.kutna.persistence.field.getLinkedFieldTargetFieldName
+import com.chadmarchand.kutna.persistence.field.hasOneToManyAnnotation
 import com.chadmarchand.kutna.persistence.service.getRepositoryQualifierFromEntity
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import field.getLinkedFieldSourceFieldName
-import field.getLinkedFieldSourceValue
-import field.getLinkedFieldTargetFieldName
-import field.hasOneToManyAnnotation
-import java.lang.RuntimeException
 import kotlin.reflect.KClass
 
 open class LinkedRepository<T: Any> constructor(

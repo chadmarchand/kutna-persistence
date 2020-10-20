@@ -68,7 +68,7 @@ class EntityMapper<T: Any>(
             .filter { field -> field.fieldName == name }
             .findFirst()
             .orElseThrow {
-                RuntimeException("Could not get source field name for linked field")
+                RuntimeException("Could not get source field name for linked field with name $name")
             }
     }
 

@@ -1,20 +1,25 @@
 package com.chadmarchand.kutna.persistence.repository
 
 import com.chadmarchand.common.types.Id
+import com.chadmarchand.kutna.persistence.field.*
 import com.chadmarchand.kutna.persistence.repository.action.*
 import com.chadmarchand.kutna.persistence.table.Table
 import com.chadmarchand.kutna.persistence.table.TableFactory
 import com.chadmarchand.kutna.persistence.mapper.EntityMapper
+import com.chadmarchand.kutna.persistence.service.getRepositoryQualifierFromEntity
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.util.*
 import kotlin.reflect.KClass
 
 open class Repository<T: Any> constructor(
     val entityType: KClass<T>
-) {
+) : KoinComponent {
     private val tableName = entityType.simpleName!!
     val table: Table<T> = TableFactory.create(entityType, tableName)
     val entityMapper: EntityMapper<T> = EntityMapper(entityType)
-    open val isLinked: Boolean = false
+    open val isLinked: Boolean
+        get() = entityMapper.linkedFields.isNotEmpty()
 
     fun getAll(): List<T> {
         return GetListAction(this)
@@ -99,11 +104,34 @@ open class Repository<T: Any> constructor(
     }
 
     internal open fun fillEntityWithLinkedData(entity: T) {
-        throw NotImplementedError()
+        val linkedFields = entityMapper.linkedFields
+        linkedFields.forEach { linkedField ->
+            val linkedRepository = getLinkedRepositoryForField<Any>(linkedField)
+            if (hasOneToManyAnnotation(linkedField.field)) {
+                val linkedEntities = getLinkedEntities(linkedRepository, linkedField, entity)
+                fillEntityFieldWithValue(entity, linkedField, linkedEntities)
+            } else {
+                val linkedEntity = getLinkedEntity(linkedRepository, linkedField, entity)
+                if (linkedEntity != null) {
+                    fillEntityFieldWithValue(entity, linkedField, linkedEntity)
+                }
+            }
+        }
     }
 
     internal open fun updateLinkedEntities(parentEntity: T) {
-        throw NotImplementedError()
+        entityMapper.linkedFields.forEach { linkedField ->
+            val linkedRepository = getLinkedRepositoryForField<Any>(linkedField)
+            if (linkedField.isListField()) {
+                linkedRepository.updateListAndDeleteAbsent(
+                    linkedField.getValue(parentEntity) as List<Nothing>,
+                    getLinkedFieldTargetFieldName(linkedField.field),
+                    getLinkedFieldSourceValue(entityMapper, linkedField.field, parentEntity)
+                )
+            } else {
+                linkedRepository.update(linkedField.getValue(parentEntity) as Any)
+            }
+        }
     }
 
     internal open fun deleteLinkedEntities(parentEntity: T) {
@@ -112,5 +140,34 @@ open class Repository<T: Any> constructor(
 
     internal open fun deleteLinkedEntities(parentEntities: List<T>) {
         throw NotImplementedError()
+    }
+
+    private fun <E: Any> getLinkedRepositoryForField(field: EntityField): Repository<E> {
+        val fieldEntityType = field.getFieldElementType() as Class<E>
+        return getLinkedRepo(fieldEntityType)
+    }
+
+    private fun <E: Any> getLinkedRepo(entityType: Class<E>): Repository<E> {
+        val linkedRepository: Repository<E> by inject(getRepositoryQualifierFromEntity(entityType))
+        return linkedRepository
+    }
+
+    private fun <L: Any> getLinkedEntities(linkedRepository: Repository<L>, linkedField: EntityField, parentEntity: T): List<L> {
+        return linkedRepository.get(
+            mapOf(
+                Pair(
+                    getLinkedFieldTargetFieldName(linkedField.field),
+                    getLinkedFieldSourceValue(entityMapper, linkedField.field, parentEntity)
+                )
+            )
+        )
+    }
+
+    private fun <L: Any> getLinkedEntity(linkedRepository: Repository<L>, linkedField: EntityField, parentEntity: T): L? {
+        return getLinkedEntities(linkedRepository, linkedField, parentEntity).firstOrNull()
+    }
+
+    private fun <L> fillEntityFieldWithValue(entity: T, field: EntityField, linkedEntities: L) {
+        field.setValue(entity, linkedEntities)
     }
 }

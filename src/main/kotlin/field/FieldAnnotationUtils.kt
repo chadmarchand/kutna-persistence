@@ -24,6 +24,11 @@ fun getLinkedFieldTargetFieldName(field: Field): String {
     throw RuntimeException("Expected field to have a link relationship annotation")
 }
 
+fun <T: Any> getLinkedFieldTargetValue(entityMapper: EntityMapper<T>, field: Field, parentEntity: T): Any {
+    val targetFieldName = getLinkedFieldTargetFieldName(field)
+    return entityMapper.getFieldByName(targetFieldName).getValue(parentEntity)!!
+}
+
 fun <T: Any> getLinkedFieldSourceValue(entityMapper: EntityMapper<T>, field: Field, parentEntity: T): Any {
     val sourceFieldName = getLinkedFieldSourceFieldName(field)
     return entityMapper.getFieldByName(sourceFieldName).getValue(parentEntity)!!

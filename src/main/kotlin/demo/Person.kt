@@ -1,7 +1,7 @@
 package com.chadmarchand.kutna.persistence.demo
 
-import com.chadmarchand.common.types.DEFAULT_ID
-import com.chadmarchand.common.types.Id
+import com.chadmarchand.kutna.common.types.DEFAULT_ID
+import com.chadmarchand.kutna.common.types.Id
 import com.chadmarchand.kutna.persistence.field.OneToMany
 import com.chadmarchand.kutna.persistence.field.OneToOne
 import com.chadmarchand.kutna.persistence.field.Persist

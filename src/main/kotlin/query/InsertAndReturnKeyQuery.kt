@@ -1,6 +1,6 @@
 package com.chadmarchand.kutna.persistence.query
 
-import com.chadmarchand.common.types.Id
+import com.chadmarchand.kutna.common.types.Id
 import com.chadmarchand.kutna.persistence.mapper.EntityMapper
 import mu.KotlinLogging
 import org.springframework.jdbc.core.JdbcTemplate

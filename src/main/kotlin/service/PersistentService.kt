@@ -1,6 +1,6 @@
 package com.chadmarchand.kutna.persistence.service
 
-import com.chadmarchand.common.types.Id
+import com.chadmarchand.kutna.common.types.Id
 import com.chadmarchand.kutna.persistence.repository.Repository
 import com.chadmarchand.kutna.persistence.repository.action.Condition
 import org.koin.core.KoinComponent

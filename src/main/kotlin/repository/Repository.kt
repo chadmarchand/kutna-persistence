@@ -1,6 +1,6 @@
 package com.chadmarchand.kutna.persistence.repository
 
-import com.chadmarchand.common.types.Id
+import com.chadmarchand.kutna.common.types.Id
 import com.chadmarchand.kutna.persistence.field.*
 import com.chadmarchand.kutna.persistence.repository.action.*
 import com.chadmarchand.kutna.persistence.table.Table

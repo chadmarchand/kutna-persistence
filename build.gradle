@@ -3,26 +3,37 @@ buildscript {
         mavenLocal()
         mavenCentral()
         jcenter()
+        maven {
+            url 'https://dl.bintray.com/cmarchand/kutna-common'
+        }
+        maven {
+            url 'https://dl.bintray.com/cmarchand/kutna-gradle-plugin'
+        }
     }
 
     ext {
-        junitVersion = '5.4.2'
-        koinVersion = '2.1.6'
+        kutnaPersistenceGroupId = 'com.chadmarchand.kutna'
+        kutnaPersistenceArtifactId = 'kutna-persistence'
+        kutnaPersistenceVersion = '1.0.87'
+        kutnaPersistenceVcsRepoUrl = 'https://github.com/chadmarchand/kutna-persistence.git'
+        kutnaPersistenceDescription = 'Entity persistence library'
     }
 
     dependencies {
         classpath 'com.h2database:h2:1.4.197'
+        classpath 'com.chadmarchand.kutna:kutna-gradle-plugin:1.0.86'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
     }
 }
 
 plugins {
-    id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.3.72'
     id 'org.flywaydb.flyway' version '6.2.1'
 }
 
-group 'com.chadmarchand'
-version '1.0-SNAPSHOT'
+apply plugin: com.chadmarchand.kutna.gradle.KutnaPlugin
+
+group "$kutnaPersistenceGroupId"
+version "$kutnaPersistenceArtifactId"
 
 sourceCompatibility = 1.8
 
@@ -30,32 +41,20 @@ repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
+    maven {
+        url 'https://dl.bintray.com/cmarchand/kutna-common'
+    }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
-
     compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.10.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.2.4.RELEASE'
 
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
     testCompile group: 'org.flywaydb', name: 'flyway-core', version: '6.2.4'
 
-    implementation "org.koin:koin-core:$koinVersion"
-    implementation "org.koin:koin-core-ext:$koinVersion"
-    testImplementation "org.koin:koin-test:$koinVersion"
-    implementation "org.koin:koin-java:2.1.0-alpha-2"
-
-    compile "com.chadmarchand:kutna-common:1.0.+"
-    testImplementation "com.chadmarchand:kutna-common:1.0.+:test"
-
-    compile 'io.github.microutils:kotlin-logging:1.7.7'
-
-    compile group: 'org.json', name: 'json', version: '20180813'
-
-    testCompile 'org.assertj:assertj-core:3.9.1'
+    compile "com.chadmarchand.kutna:kutna-common:1.0.87"
+    testImplementation "com.chadmarchand.kutna:kutna-common:1.0.87:test"
 }
 
 compileKotlin {
@@ -63,14 +62,6 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
-}
-
-test {
-    useJUnitPlatform()
-    testLogging {
-        events("passed", "skipped", "failed")
-    }
-    environment "USE_TEST_DB", "true"
 }
 
 flyway {

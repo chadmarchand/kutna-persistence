@@ -21,7 +21,7 @@ buildscript {
 
     dependencies {
         classpath 'com.h2database:h2:1.4.197'
-        classpath 'com.chadmarchand.kutna:kutna-gradle-plugin:1.0.86'
+        classpath 'com.chadmarchand.kutna:kutna-gradle-plugin:1.0.+'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
     }
 }
@@ -53,8 +53,8 @@ dependencies {
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
     testCompile group: 'org.flywaydb', name: 'flyway-core', version: '6.2.4'
 
-    compile "com.chadmarchand.kutna:kutna-common:1.0.87"
-    testImplementation "com.chadmarchand.kutna:kutna-common:1.0.87:test"
+    compile "com.chadmarchand.kutna:kutna-common:1.0.102"
+    testImplementation "com.chadmarchand.kutna:kutna-common:1.0.102:test"
 }
 
 compileKotlin {
@@ -74,25 +74,3 @@ task configurePublishing(type: com.chadmarchand.kutna.gradle.KutnaPublishingTask
     artifactDescription = "$kutnaPersistenceDescription"
     vcsRepoUrl = "$kutnaPersistenceVcsRepoUrl"
 }
-
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    publications = ['mavenPublication']
-    publish = true
-
-    pkg {
-        repo = "$kutnaPersistenceArtifactId"
-        name = "$kutnaPersistenceArtifactId"
-        licenses = ['MIT']
-        vcsUrl = "$kutnaPersistenceVcsRepoUrl"
-        version {
-            name = "$kutnaPersistenceVersion"
-            desc = "$kutnaPersistenceVersion"
-            released  = new Date()
-        }
-    }
-}
-bintrayUpload.dependsOn configurePublishing
-bintrayUpload.dependsOn jar
-bintrayUpload.dependsOn testJar

@@ -2,8 +2,8 @@ package com.chadmarchand.kutna.persistence.operation
 
 import com.chadmarchand.kutna.persistence.query.SqlQueryFactory
 import com.chadmarchand.kutna.persistence.mapper.EntityMapper
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class PatchOperation<T : Any>(
     private val collectionName: String,

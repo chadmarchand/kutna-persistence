@@ -3,7 +3,7 @@ package com.chadmarchand.kutna.persistence.demo
 import org.assertj.core.api.AssertionsForClassTypes
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.koin.core.inject
+import org.koin.core.component.inject
 import org.koin.test.KoinTest
 
 @ExtendWith(DemoTestExtension::class)

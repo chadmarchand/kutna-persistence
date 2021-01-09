@@ -1,7 +1,7 @@
 package com.chadmarchand.kutna.persistence.query
 
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.springframework.jdbc.core.JdbcTemplate
 import kotlin.reflect.KClass
 

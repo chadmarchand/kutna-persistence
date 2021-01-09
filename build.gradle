@@ -14,7 +14,7 @@ buildscript {
     ext {
         kutnaPersistenceGroupId = 'com.chadmarchand.kutna'
         kutnaPersistenceArtifactId = 'kutna-persistence'
-        kutnaPersistenceVersion = '1.0.88'
+        kutnaPersistenceVersion = '1.0.89'
         kutnaPersistenceVcsRepoUrl = 'https://github.com/chadmarchand/kutna-persistence.git'
         kutnaPersistenceDescription = 'Entity persistence library'
     }

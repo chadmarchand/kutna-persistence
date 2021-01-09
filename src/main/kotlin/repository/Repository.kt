@@ -7,8 +7,8 @@ import com.chadmarchand.kutna.persistence.table.Table
 import com.chadmarchand.kutna.persistence.table.TableFactory
 import com.chadmarchand.kutna.persistence.mapper.EntityMapper
 import com.chadmarchand.kutna.persistence.service.getRepositoryQualifierFromEntity
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.*
 import kotlin.reflect.KClass
 

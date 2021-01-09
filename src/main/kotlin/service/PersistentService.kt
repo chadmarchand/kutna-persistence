@@ -3,8 +3,8 @@ package com.chadmarchand.kutna.persistence.service
 import com.chadmarchand.kutna.common.types.Id
 import com.chadmarchand.kutna.persistence.repository.Repository
 import com.chadmarchand.kutna.persistence.repository.action.Condition
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.koin.core.qualifier.Qualifier
 import org.koin.core.qualifier.named
 import org.springframework.beans.factory.annotation.Autowired

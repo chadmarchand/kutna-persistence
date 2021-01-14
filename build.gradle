@@ -14,7 +14,7 @@ buildscript {
     ext {
         kutnaPersistenceGroupId = 'com.chadmarchand.kutna'
         kutnaPersistenceArtifactId = 'kutna-persistence'
-        kutnaPersistenceVersion = '1.0.90'
+        kutnaPersistenceVersion = '1.0.91'
         kutnaPersistenceVcsRepoUrl = 'https://github.com/chadmarchand/kutna-persistence.git'
         kutnaPersistenceDescription = 'Entity persistence library'
     }
@@ -47,13 +47,13 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.10.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.2.4.RELEASE'
+    implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.10.RELEASE'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.2.4.RELEASE'
 
-    testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
-    testCompile group: 'org.flywaydb', name: 'flyway-core', version: '6.2.4'
+    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.197'
+    implementation group: 'org.flywaydb', name: 'flyway-core', version: '6.2.4'
 
-    compile "com.chadmarchand.kutna:kutna-common:1.0.103"
+    implementation "com.chadmarchand.kutna:kutna-common:1.0.103"
     testImplementation "com.chadmarchand.kutna:kutna-common:1.0.103:test"
 }
 

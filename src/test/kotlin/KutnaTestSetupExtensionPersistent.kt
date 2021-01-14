@@ -1,9 +1,7 @@
 package com.chadmarchand.kutna.persistence
 
 import com.chadmarchand.kutna.common.koin.KutnaExtension
-import com.chadmarchand.kutna.persistence.configuration.getDataSource
 import com.chadmarchand.kutna.persistence.migration.flywayMigrate
-import org.flywaydb.core.Flyway
 import org.junit.jupiter.api.extension.ExtensionContext
 import org.koin.core.module.Module
 

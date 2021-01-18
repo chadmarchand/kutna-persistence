@@ -14,14 +14,14 @@ buildscript {
     ext {
         kutnaPersistenceGroupId = 'com.chadmarchand.kutna'
         kutnaPersistenceArtifactId = 'kutna-persistence'
-        kutnaPersistenceVersion = '1.0.91'
+        kutnaPersistenceVersion = '1.0.93'
         kutnaPersistenceVcsRepoUrl = 'https://github.com/chadmarchand/kutna-persistence.git'
         kutnaPersistenceDescription = 'Entity persistence library'
     }
 
     dependencies {
         classpath 'com.h2database:h2:1.4.197'
-        classpath 'com.chadmarchand.kutna:kutna-gradle-plugin:1.0.+'
+        classpath 'com.chadmarchand.kutna:kutna-gradle-plugin:1.0.113'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
     }
 }
@@ -35,14 +35,13 @@ apply plugin: com.chadmarchand.kutna.gradle.KutnaPlugin
 group "$kutnaPersistenceGroupId"
 version "$kutnaPersistenceArtifactId"
 
-sourceCompatibility = 1.8
-
 repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
     maven {
         url 'https://dl.bintray.com/cmarchand/kutna-common'
+        metadataSources { artifact() }
     }
 }
 
@@ -55,13 +54,8 @@ dependencies {
 
     implementation "com.chadmarchand.kutna:kutna-common:1.0.103"
     testImplementation "com.chadmarchand.kutna:kutna-common:1.0.103:test"
-}
 
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    testImplementation "org.json:json:20180813"
 }
 
 flyway {
